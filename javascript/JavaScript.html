@@ -1,8 +1,13 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <script>
+  let currentClassroom = {
+    id: '',
+    name: '',
+  };
+
   function listClassrooms(element) {
-    var keyWord = $('#classroom-key-word').val();
+    let keyWord = $('#classroom-key-word').val();
     google.script.run
       .withSuccessHandler(listClassroomsSuccessHandler)
       .withUserObject(element)
@@ -14,10 +19,20 @@
       $('#classroom-list').html('没有符合条件的班级');
       return;
     }
-    var classroomNameDoms = "";
-    for (var i = 0; i < response.length; i++) {
-      classroomNameDoms = classroomNameDoms + "<p>" + response[i].name + "</p>";
+    $('#classroom-list').html('');
+    for (let i = 0; i < response.length; i++) {
+      let div = $(document.createElement('div'));
+      let input = $(document.createElement('input')).prop({
+            type: 'radio',
+            name: 'classroomList',
+            value: response[i].id,
+            id: response[i].id,
+        });
+        let nameLabel = $(document.createElement('label')).prop({
+          for: response[i].id
+        }).text(response[i].name);
+        $(div).append(input).append(nameLabel);
+        $('#classroom-list').append(div);
     }
-    $('#classroom-list').html(classroomNameDoms);
   }
 </script>
