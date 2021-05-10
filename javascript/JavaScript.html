@@ -6,6 +6,33 @@
     name: '',
   };
 
+  let documentStatus = {
+    listingDiv: true,
+    creatingDiv: false,
+    operatingDiv: false,
+  }
+
+  updateStatus(documentStatus);
+
+  function updateStatus(newStatus) {
+    Object.keys(newStatus).forEach(key => {
+      documentStatus[key] = newStatus[key];
+      if (newStatus[key]) {
+        showDiv(key);
+      } else {
+        hideDiv(key);
+      }
+    });
+  }
+
+  function showDiv(elementId) {
+    $('#' + elementId).removeClass('hide');
+  }
+
+  function hideDiv(elementId) {
+    $('#' + elementId).addClass('hide');
+  }
+
   function listClassrooms(element) {
     let keyWord = $('#classroom-key-word').val();
     google.script.run
@@ -23,16 +50,21 @@
     for (let i = 0; i < response.length; i++) {
       let div = $(document.createElement('div'));
       let input = $(document.createElement('input')).prop({
-            type: 'radio',
-            name: 'classroomList',
-            value: response[i].id,
-            id: response[i].id,
-        });
-        let nameLabel = $(document.createElement('label')).prop({
-          for: response[i].id
-        }).text(response[i].name);
-        $(div).append(input).append(nameLabel);
-        $('#classroom-list').append(div);
+        type: 'radio',
+        name: 'classroomList',
+        value: response[i].id,
+        id: response[i].id,
+      });
+      let nameLabel = $(document.createElement('label')).prop({
+        for: response[i].id
+      }).text(response[i].name);
+      $(div).append(input).append(nameLabel);
+      $('#classroom-list').append(div);
+      showDiv('choose-classroom-button');
     }
+  }
+
+  function createClassroom(element) {
+    updateStatus({ listingDiv: false, creatingDiv: true });
   }
 </script>

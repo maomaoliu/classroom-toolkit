@@ -1,10 +1,16 @@
-<h1>选择要操作的班级或创建新班级</h1>
+<div id="listingDiv">
+	<h1>选择要操作的班级或创建新班级</h1>
 
-<input type="text" id="classroom-key-word" value="黑马培训" />
-<input type="button" value="列出班级" onclick="listClassrooms(this)" />
+	<input type="text" id="classroom-key-word" value="黑马培训" />
+	<input type="button" value="列出班级" onclick="listClassrooms(this)" />
 
-<div id="classroom-list"></div>
+	<label> 或 </label>
 
-<div>
-	<input type="button" value="选好了"/>
+	<input type="button" value="创建新班级" onclick="createClassroom(this)" />
+
+	<div id="classroom-list"></div>
+
+	<div id="choose-classroom-button" class="hide">
+		<input type="button" value="选好了"/>
+	</div>
 </div>
