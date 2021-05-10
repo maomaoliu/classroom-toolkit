@@ -1,6 +1,6 @@
 <script>
     function listClassrooms(element) {
-        let keyWord = $('#classroom-key-word').val();
+        const keyWord = $('#classroom-key-word').val();
         google.script.run
             .withSuccessHandler(listClassroomsSuccessHandler)
             .withUserObject(element)
@@ -14,14 +14,14 @@
         }
         $('#classroom-list').html('');
         for (let i = 0; i < response.length; i++) {
-            let div = $(document.createElement('div'));
-            let input = $(document.createElement('input')).prop({
+            const div = $(document.createElement('div'));
+            const input = $(document.createElement('input')).prop({
                 type: 'radio',
                 name: 'classroomList',
                 value: response[i].id,
                 id: response[i].id,
             });
-            let nameLabel = $(document.createElement('label')).prop({
+            const nameLabel = $(document.createElement('label')).prop({
                 for: response[i].id
             }).text(response[i].name);
             $(div).append(input).append(nameLabel);

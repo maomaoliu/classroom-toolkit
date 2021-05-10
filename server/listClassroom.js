@@ -1,9 +1,9 @@
 // 列出包含 keyWord 的 classroom
 function listClassrooms(keyWord, pageSize) {
-  var optionalArgs = {
+  const optionalArgs = {
     pageSize: pageSize
   };
-  var response = Classroom.Courses.list(optionalArgs);
-  var courses = response.courses;
+  const response = Classroom.Courses.list(optionalArgs);
+  const courses = response.courses;
   return courses.filter((value) => value.name.includes(keyWord));
 }
