@@ -18,8 +18,8 @@
     }
 
     function createClassroomSuccessHandler(response) {
-        currentClassroom.id = response.id;
-        currentClassroom.name = response.name;
+        currentClassroom = response;
+        initCourseWorkPage();
         updateStatus({ creatingDiv: false, operatingDiv: true });
     }
 
