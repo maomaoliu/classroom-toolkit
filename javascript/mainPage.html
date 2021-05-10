@@ -1,0 +1,36 @@
+<script>
+    function listClassrooms(element) {
+        let keyWord = $('#classroom-key-word').val();
+        google.script.run
+            .withSuccessHandler(listClassroomsSuccessHandler)
+            .withUserObject(element)
+            .listClassrooms(keyWord, 100);
+    }
+
+    function listClassroomsSuccessHandler(response) {
+        if (response.length == 0) {
+            $('#classroom-list').html('没有符合条件的班级');
+            return;
+        }
+        $('#classroom-list').html('');
+        for (let i = 0; i < response.length; i++) {
+            let div = $(document.createElement('div'));
+            let input = $(document.createElement('input')).prop({
+                type: 'radio',
+                name: 'classroomList',
+                value: response[i].id,
+                id: response[i].id,
+            });
+            let nameLabel = $(document.createElement('label')).prop({
+                for: response[i].id
+            }).text(response[i].name);
+            $(div).append(input).append(nameLabel);
+            $('#classroom-list').append(div);
+            showDiv('choose-classroom-button');
+        }
+    }
+
+    function createClassroom(element) {
+        updateStatus({ listingDiv: false, creatingDiv: true });
+    }
+</script>

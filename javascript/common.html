@@ -1,0 +1,35 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script>
+  let currentClassroom = {
+    id: '',
+    name: '',
+  };
+
+  let documentStatus = {
+    listingDiv: true,
+    creatingDiv: false,
+    operatingDiv: false,
+  }
+
+  updateStatus(documentStatus);
+
+  function updateStatus(newStatus) {
+    Object.keys(newStatus).forEach(key => {
+      documentStatus[key] = newStatus[key];
+      if (newStatus[key]) {
+        showDiv(key);
+      } else {
+        hideDiv(key);
+      }
+    });
+  }
+
+  function showDiv(elementId) {
+    $('#' + elementId).removeClass('hide');
+  }
+
+  function hideDiv(elementId) {
+    $('#' + elementId).addClass('hide');
+  }
+</script>
