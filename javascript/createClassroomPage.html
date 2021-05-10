@@ -3,8 +3,7 @@
         const marketName = $('#uname').val();
         const classroomNo = $('#classroomNo').val();
         const sectionName = createSectionName(marketName, classroomNo);
-        const name = '黑马培训-' + sectionName;
-        $('#new-classroom-name').text(name);
+        $('#new-classroom-name').text(createClassroomName(sectionName));
     }
 
     function createClassroom(element) {
@@ -14,7 +13,7 @@
         google.script.run
             .withSuccessHandler(createClassroomSuccessHandler)
             .withUserObject(element)
-            .createClassroom('黑马培训-' + sectionName, sectionName);
+            .createClassroom(createClassroomName(sectionName), sectionName);
     }
 
     function createClassroomSuccessHandler(response) {
@@ -25,5 +24,9 @@
 
     function createSectionName(marketName, classroomNo) {
         return marketName + '第' + classroomNo + '期';
+    }
+
+    function createClassroomName(sectionName) {
+        return classroomSeris + '-' + sectionName;
     }
 </script>
