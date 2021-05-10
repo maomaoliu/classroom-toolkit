@@ -2,15 +2,18 @@
        <h1>创建新班级</h1>
 
        <div>
-
               <label for="uname">MU名称:</label>
 
-              <input type="text" id="uname" name="uname" required minlength="2" maxlength="20" size="20">
+              <input type="text" id="uname" name="uname" required minlength="2" maxlength="20" size="20"
+                     onchange="updateClassroomName()">
 
-              <label for="">第几期:</label>
+              <label for="classroomNo">第几期:</label>
 
-              <input type="number" id="classroomNo" name="classroomNo" required minlength="0" maxlength="10" size="10">
+              <input type="number" id="classroomNo" name="classroomNo" required minlength="0" maxlength="10" size="10"
+                     onchange="updateClassroomName()">
 
-              <input type="button" value="创建" />
+              <div><label>班级名称：</label> <span id="new-classroom-name">将有您填写的信息生成</span></div>
+
+              <input type="button" value="创建" onclick="createClassroom(this)" />
        </div>
 </div>

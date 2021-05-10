@@ -1,3 +1,29 @@
 <script>
-    
+    function updateClassroomName() {
+        const marketName = $('#uname').val();
+        const classroomNo = $('#classroomNo').val();
+        const sectionName = createSectionName(marketName, classroomNo);
+        const name = '黑马培训-' + sectionName;
+        $('#new-classroom-name').text(name);
+    }
+
+    function createClassroom(element) {
+        const marketName = $('#uname').val();
+        const classroomNo = $('#classroomNo').val();
+        const sectionName = createSectionName(marketName, classroomNo);
+        google.script.run
+            .withSuccessHandler(createClassroomSuccessHandler)
+            .withUserObject(element)
+            .createClassroom('黑马培训-' + sectionName, sectionName);
+    }
+
+    function createClassroomSuccessHandler(response) {
+        currentClassroom.id = response.id;
+        currentClassroom.name = response.name;
+        updateStatus({ creatingDiv: false, operatingDiv: true });
+    }
+
+    function createSectionName(marketName, classroomNo) {
+        return marketName + '第' + classroomNo + '期';
+    }
 </script>
