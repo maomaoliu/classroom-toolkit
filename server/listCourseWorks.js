@@ -2,8 +2,9 @@ function listCourseWork(courseId) {
     const topics = listTopics_(courseId);
     topics.push({ topicId: undefined, name: 'No Topic' });
     let groupedCourseWorks = topics.map((topic) => { return { topic: topic, courseWorks: [] } });
-    const courseWorks = Classroom.Courses.CourseWork.list(courseId).courseWork;
-    courseWorks.forEach((courseWork) => {
+    const courseWorks = toArray_(Classroom.Courses.CourseWork.list(courseId).courseWork);
+    const courseWorkMaterials = toArray_(Classroom.Courses.CourseWorkMaterials.list(courseId).courseWorkMaterial);
+    courseWorks.concat(courseWorkMaterials).forEach((courseWork) => {
         groupedCourseWorks.find(o => o.topic.topicId === courseWork.topicId).courseWorks.push({ id: courseWork.id, title: courseWork.title, state: courseWork.state, alternateLink: courseWork.alternateLink });
     });
     sortGroupedCourseWork_(groupedCourseWorks)
@@ -11,8 +12,7 @@ function listCourseWork(courseId) {
 }
 
 function listTopics_(courseId) {
-    const topics = Classroom.Courses.Topics.list(courseId);
-    return Object.keys(topics).length === 0 ? [] : topics.topic;
+   return toArray_(Classroom.Courses.Topics.list(courseId).topic);
 }
 
 function sortGroupedCourseWork_(groupedCourseWorks) {
@@ -24,4 +24,8 @@ function judgeDiff_(a, b) {
     if (a < b) return -1;
     if (a > b) return 1;
     return 0;
+}
+
+function toArray_(object) {
+    return Array.isArray(object) ? object : [];
 }
