@@ -1,4 +1,6 @@
 <script>
+    let classrooms = [];
+
     function listClassrooms(element) {
         const keyWord = $('#classroom-key-word').val();
         google.script.run
@@ -13,11 +15,12 @@
             return;
         }
         $('#classroom-list').html('');
+        classrooms = response;
         for (let i = 0; i < response.length; i++) {
             const div = $(document.createElement('div'));
             const input = $(document.createElement('input')).prop({
                 type: 'radio',
-                name: 'classroomList',
+                name: 'classroomOption',
                 value: response[i].id,
                 id: response[i].id,
             });
@@ -32,5 +35,12 @@
 
     function gotoCreateClassroomPage(element) {
         updateStatus({ listingDiv: false, creatingDiv: true });
+    }
+
+    function gotoCourseWorkPage(element) {
+        let checkedClassroomId = $('input[name=classroomOption]:checked').val();
+        currentClassroom = classrooms.find(c => c.id === checkedClassroomId);
+        initCourseWorkPage();
+        updateStatus({ listingDiv: false, creatingDiv: false, operatingDiv: true });
     }
 </script>
