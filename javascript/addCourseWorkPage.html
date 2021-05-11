@@ -2,6 +2,33 @@
     function initCourseWorkPage() {
         $('#classroom-name').text(currentClassroom.name);
         $('#classroom-url').text(currentClassroom.alternateLink);
-        console.log(currentClassroom.id);
+
+        google.script.run
+            .withSuccessHandler(listCourseWorkHandler)
+            .listCourseWork(currentClassroom.id);
+
+    }
+
+    function listCourseWorkHandler(response) {
+        let courseWorksElememt = $('#released-classworks');
+        courseWorksElememt.html('');
+        response.forEach(courseWorkGroupedByTopic => {
+            const topicName = $(document.createElement('span')).prop({ class: 'topic-name' });
+            topicName.text(courseWorkGroupedByTopic.topic.name);
+            const ul = $(document.createElement('ul')).prop({ class: 'classworks-under-topic' });
+            courseWorkGroupedByTopic.courseWorks.forEach(courseWork => {
+                const li = $(document.createElement('li')).prop({ class: 'classworks' });
+                const courseWorkTitle = $(document.createElement('span')).prop({ class: 'title' });
+                const courseWorkState = $(document.createElement('span')).prop({ class: 'state' });
+                courseWorkTitle.text(courseWork.title);
+                courseWorkState.text(courseWork.state);
+                li.append(courseWorkTitle).append(courseWorkState);
+                ul.append(li);
+            })
+
+            const topic = $(document.createElement('div')).prop({ class: 'topic' });
+            topic.append(topicName).append(ul);
+            courseWorksElememt.append(topic);
+        })
     }
 </script>
