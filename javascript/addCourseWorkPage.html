@@ -12,6 +12,10 @@
 
     }
 
+    function goBackToMainPage() {
+        updateStatus({ listingDiv: true, creatingDiv: false, operatingDiv: false });
+    }
+
     function listCourseWorkHandler(response) {
         let courseWorksElememt = $('#released-classworks');
         courseWorksElememt.html('');
