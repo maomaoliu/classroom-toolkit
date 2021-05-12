@@ -18,6 +18,7 @@ const configColumns = {
 };
 
 //  { topic | title | materialType | content { Type | Info } }
+// 模板文件：https://docs.google.com/spreadsheets/d/1XMplwoPCZjkwKYzrmLWc6acLOWXd41-xCz9NXITd8SA/edit?usp=sharing
 function loadMaterials() {
     const sheet = SpreadsheetApp.openById(materialsConfigFileId);
     const [headers, ...rows] = sheet.getDataRange().getValues();
