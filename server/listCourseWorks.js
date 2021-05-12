@@ -19,13 +19,3 @@ function sortGroupedCourseWork_(groupedCourseWorks) {
     groupedCourseWorks.forEach((courseWork) => courseWork.courseWorks.sort((a, b) => judgeDiff_(a.title, b.title)));
     groupedCourseWorks.sort((a, b) => judgeDiff_(a.topic.name, b.topic.name));
 }
-
-function judgeDiff_(a, b) {
-    if (a < b) return -1;
-    if (a > b) return 1;
-    return 0;
-}
-
-function toArray_(object) {
-    return Array.isArray(object) ? object : [];
-}

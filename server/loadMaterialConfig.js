@@ -38,7 +38,7 @@ function loadMaterials() {
             });
         }
     }
-    Logger.log(materials);
+    return materials;
 }
 
 function convertToObjects_(headers, rows) {

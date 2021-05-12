@@ -7,28 +7,24 @@
 	<ul id="released-classworks" class="classworks">
 		<li class="classworks">
 			<div class="topic">
-				<span class="topic-name">第1章</span>
+				<span class="topic-name">.</span>
 				<input type="button" value="导入客观题分数">
 				<ul class="classworks-under-topic">
-					<li class="classworks-under-topic">第1章 课程学习材料</li>
+					<li class="classworks-under-topic">.</li>
 				</ul>
 			</div>
 		</li>
 	</ul>
 
-	<h2>请选择要发布的章节和dueDate</h2>
-	<div>
-		<input type="radio" id="capture3" name="captureList" value="capture3">
-		<label for="capture3">第3章</label> <label>共6个课程材料</label>
-	</div>
-
-	<div>
-		<input type="radio" id="capture4" name="captureList" value="capture4">
-		<label for="capture4">第4章</label> <label>共6个课程材料</label>
-	</div>
-	<label for="due-time">期望的作业提交时间</label>
-
-	<input type="datetime-local" id="due-time" name="meeting-time" value="2021-06-12T19:30">
+	<h2>请选择要发布的章节和并填写提交时间</h2>
+	<ul id="to-release-topics">
+		<li class="topic">
+			<input type="radio" id="capture3" name="topic" value="capture3">
+			<label for="capture3" class="topic-name">.</label> <span class="topic-detail">共6个课程材料</span>
+		</li>
+	</ul>
+	<label for="due-time">期望的自测题提交时间</label>	<input type="datetime-local" id="due-time" name="meeting-time" value="2021-06-12T19:30">
+	<label for="due-time">期望的大作业提交时间</label>	<input type="datetime-local" id="due-time" name="meeting-time" value="2021-06-12T19:30">
 
 	<div>
 		<input type="button" value="发布" />

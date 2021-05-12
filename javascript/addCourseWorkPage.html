@@ -6,6 +6,9 @@
         google.script.run
             .withSuccessHandler(listCourseWorkHandler)
             .listCourseWork(currentClassroom.id);
+        google.script.run
+            .withSuccessHandler(listTopicsNotReleasedHandler)
+            .listTopicsNotReleased(currentClassroom.id);
 
     }
 
@@ -31,5 +34,26 @@
                 topic.append(topicName).append(ul);
                 courseWorksElememt.append(topic);
             })
+    }
+
+    function listTopicsNotReleasedHandler(response) {
+        let topicsToAddElement = $('#to-release-topics');
+        topicsToAddElement.html('');
+        response.forEach((topic, index) => {
+            const input = $(document.createElement('input')).prop({
+                type: 'radio',
+                name: 'topic',
+                value: topic.name,
+                id: index,
+            });
+            const topicLabel = $(document.createElement('label')).prop({
+                for: index,
+                class: 'topic-name'
+            }).text(topic.name);
+            const topicDetailSpan = $(document.createElement('span')).prop({ class: 'topic-detail'}).text('共 ' + topic.materialCount + ' 个课程材料' );
+            const li = $(document.createElement('li')).prop({ class: 'topic' });
+            li.append(input).append(topicLabel).append(topicDetailSpan);
+            topicsToAddElement.append(li);
+        });
     }
 </script>
