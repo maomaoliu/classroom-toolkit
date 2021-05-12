@@ -17,7 +17,7 @@ const configColumns = {
     contentInfo: '内容详情'
 };
 
-//  { topic | title | materialType | content { Type | Info } }
+//  { topic | title | materialType | content { type | info } }
 // 模板文件：https://docs.google.com/spreadsheets/d/1XMplwoPCZjkwKYzrmLWc6acLOWXd41-xCz9NXITd8SA/edit?usp=sharing
 function loadMaterials() {
     const sheet = SpreadsheetApp.openById(materialsConfigFileId);
