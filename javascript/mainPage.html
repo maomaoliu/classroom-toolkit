@@ -39,6 +39,7 @@
 
     function gotoCourseWorkPage(element) {
         let checkedClassroomId = $('input[name=classroomOption]:checked').val();
+        if (checkedClassroomId === undefined) return;
         currentClassroom = classrooms.find(c => c.id === checkedClassroomId);
         initCourseWorkPage();
         updateStatus({ listingDiv: false, creatingDiv: false, operatingDiv: true });

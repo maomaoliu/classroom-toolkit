@@ -1,16 +1,22 @@
-<div id="listingDiv">
-	<h1>选择要操作的班级或创建新班级</h1>
+<div id="listingDiv" class="container">
+	<div class="row">
+		<p class="col fs-2">选择要操作的班级或创建新班级</p>
+	</div>
 
-	<input type="text" id="classroom-key-word"/>
-	<input type="button" value="列出班级" onclick="listClassrooms(this)" />
-
-	<label> 或 </label>
-
-	<input type="button" value="创建新班级" onclick="gotoCreateClassroomPage(this)" />
+	<div class="row">
+		<div class="col">
+			<input type="text" id="classroom-key-word" />
+			<input type="button" value="列出班级" onclick="listClassrooms(this)" />
+			<label> 或 </label>
+			<input type="button" value="创建新班级" onclick="gotoCreateClassroomPage(this)" />
+		</div>
+	</div>
 
 	<div id="classroom-list"></div>
 
-	<div id="choose-classroom-button" class="hide">
-		<input type="button" value="选好了" onclick="gotoCourseWorkPage(this)"/>
+	<div id="choose-classroom-button" class="hide row">
+		<div class="col">
+			<input type="button" value="选好了" onclick="gotoCourseWorkPage(this)" />
+		</div>
 	</div>
 </div>
