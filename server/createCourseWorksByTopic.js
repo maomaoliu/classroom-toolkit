@@ -95,7 +95,7 @@ function buildAttachements_(content, topicFolder) {
 function buildAttachment_(file, attachmentType) {
     if (attachmentType === 'link') { return buildLinkAttachment_(file.getUrl()) }
     if (attachmentType === 'driveFileViewMode') { return buildDriveFileAttachment_(file.getId(), 'VIEW') }
-    if (attachmentType === 'driveFileCopyMode') { buildDriveFileAttachment_(file.getId(), 'STUDENT_COPY') };
+    if (attachmentType === 'driveFileCopyMode') { return buildDriveFileAttachment_(file.getId(), 'STUDENT_COPY') };
 }
 
 function buildLinkAttachment_(url) {
