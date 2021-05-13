@@ -43,14 +43,15 @@ function createMaterial_(material, topicId, courseId) {
 }
 
 function createAssignment_(material, topicId, courseId, dueTime, topicFolder) {
+    const dateObject = new Date(dueTime);
     let courseWorkToCreate = {
         title: material.title,
         description: buildDescription_(material.content),
         materials: buildAttachements_(material.content, topicFolder),
         state: 'PUBLISHED',
         workType: 'ASSIGNMENT',
-        dueDate: buildDueDate_(dueTime),
-        dueTime: buildDueTime_(dueTime),
+        dueDate: buildDueDate_(dateObject),
+        dueTime: buildDueTime_(dateObject),
         maxPoints: 1,
         topicId: topicId
     }
@@ -58,19 +59,17 @@ function createAssignment_(material, topicId, courseId, dueTime, topicFolder) {
 }
 
 function buildDueDate_(dueTime) {
-    // "2021-06-12T19:30"
     return {
-        year: parseInt(dueTime.substr(0, 4)),
-        month: parseInt(dueTime.substr(5, 2)),
-        day: parseInt(dueTime.substr(8, 2)),
+        year: parseInt(dueTime.getUTCFullYear()),
+        month: parseInt(dueTime.getUTCMonth() + 1),
+        day: parseInt(dueTime.getUTCDate()),
     };
 }
 
 function buildDueTime_(dueTime) {
-    // "2021-06-12T19:30"
     return {
-        hours: parseInt(dueTime.substr(11, 2)),
-        minutes: parseInt(dueTime.substr(14, 2)),
+        hours: parseInt(dueTime.getUTCHours()),
+        minutes: parseInt(dueTime.getUTCMinutes()),
         seconds: 0,
         nanos: 0
     };
