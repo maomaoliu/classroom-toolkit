@@ -85,7 +85,7 @@ function buildAttachements_(content, topicFolder) {
     var copiedAttachments = [];
     attachmentContents.forEach(attachment => {
         const file = DriveApp.getFileById(getFileIdFromUrl(attachment.info));
-        const fileCopied = file.makeCopy(topicFolder);
+        const fileCopied = file.makeCopy(file.getName(), topicFolder);
         copiedAttachments.push(buildAttachment_(fileCopied, attachment.type));
     });
     return copiedAttachments;
