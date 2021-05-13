@@ -23,11 +23,11 @@
 			<label for="capture3" class="topic-name">.</label> <span class="topic-detail">共6个课程材料</span>
 		</li>
 	</ul>
-	<label for="due-time">期望的自测题提交时间</label>	<input type="datetime-local" id="due-time" name="meeting-time" value="2021-06-12T19:30">
-	<label for="due-time">期望的大作业提交时间</label>	<input type="datetime-local" id="due-time" name="meeting-time" value="2021-06-12T19:30">
+	<label for="practice-due-time">期望的自测题提交时间</label>	<input type="datetime-local" id="practice-due-time" name="practice-due-time" value="2021-06-12T19:30">
+	<label for="assignment-due-time">期望的大作业提交时间</label>	<input type="datetime-local" id="assignment-due-time" name="assignment-due-time" value="2021-06-12T19:30">
 
 	<div>
-		<input type="button" value="发布" />
+		<input type="button" value="发布" onclick="releaseTopicMaterials()"/>
 	</div>
 
 	<input type="button" value="回到班级列表" onclick="goBackToMainPage()" />

@@ -12,8 +12,21 @@
 
     }
 
+    function releaseTopicMaterials() {
+        let topicName = $('input[name=topic]:checked').val();
+        let practiceDueTime = $('#practice-due-time').val();
+        let assignmentDueTime = $('#assignment-due-time').val();
+        google.script.run
+            .withSuccessHandler(createCourseWorksHandler)
+            .createCourseWorks(currentClassroom.id, topicName, practiceDueTime, assignmentDueTime) ;        
+    }
+
     function goBackToMainPage() {
         updateStatus({ listingDiv: true, creatingDiv: false, operatingDiv: false });
+    }
+
+    function createCourseWorksHandler(response) {
+        initCourseWorkPage();
     }
 
     function listCourseWorkHandler(response) {
