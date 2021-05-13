@@ -1,5 +1,5 @@
 function createCourseWorks(courseId, topicName, practiceDueTime, assignmentDueTime) {
-    const materials = loadMaterials().filter(material => material.topic === topicName);
+    const materials = loadMaterials().filter(material => material.topic === topicName).sort((a, b) => judgeDiff_(b.title, a.title));
     const topicId = getOrCreateTopicId_(courseId, topicName);
     const teacherFolder = getTeacherFolder_(courseId);
     const topicFolder = getOrCreateTopicFolder_(teacherFolder, topicName);
