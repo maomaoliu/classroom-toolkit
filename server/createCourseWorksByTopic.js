@@ -44,18 +44,27 @@ function createMaterial_(material, topicId, courseId) {
 
 function createAssignment_(material, topicId, courseId, dueTime, topicFolder) {
     const dateObject = new Date(dueTime);
+    const attachments = buildAttachements_(material.content, topicFolder);
+    const maxPoints = getPoints_(material.title, attachments);
     let courseWorkToCreate = {
         title: material.title,
         description: buildDescription_(material.content),
-        materials: buildAttachements_(material.content, topicFolder),
+        materials: attachments,
         state: 'PUBLISHED',
         workType: 'ASSIGNMENT',
         dueDate: buildDueDate_(dateObject),
         dueTime: buildDueTime_(dateObject),
-        maxPoints: 1,
+        maxPoints: maxPoints,
         topicId: topicId
     }
     Classroom.Courses.CourseWork.create(courseWorkToCreate, courseId);
+}
+
+function getPoints_(title, attachments) {
+    if (isPracticeAssignment_(title) && attachments.length === 1) {
+        return attachments[0].link !== undefined ? getMaxPoints(getFileIdFromUrl(attachments[0].link.url)) : 1;
+    }
+    return 1;
 }
 
 function buildDueDate_(dueTime) {
