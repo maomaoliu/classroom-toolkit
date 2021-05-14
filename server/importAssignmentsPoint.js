@@ -28,9 +28,7 @@ function listUnderFolder(folder, mimeType) {
     const files = folder.getFiles();
     while (files.hasNext()) {
         const file = files.next();
-        console.log("%s: type: %s", file, file.getMimeType());
         if (file.getMimeType() === mimeType) {
-          console.log('RIGHT FORM');
           targetFiles.push(FormApp.openById(file.getId()));
         };
     }
@@ -39,13 +37,6 @@ function listUnderFolder(folder, mimeType) {
         targetFiles = targetFiles.concat(listUnderFolder(folders.next(), mimeType));
     }
     return targetFiles;
-}
-
-function testImportPointsByTopic() {
-    const courseId = '327809079990';
-    const courseWorkId = '337331498440';
-    const courseWork = Classroom.Courses.CourseWork.get(courseId, courseWorkId);
-    Logger.log(importPointsByCourseWorks(courseId, [courseWork]));
 }
 
 function loadStudents_(courseId) {
