@@ -1,7 +1,6 @@
 <script>
     function initCourseWorkPage() {
-        $('#classroom-name').text(currentClassroom.name);
-        $('#classroom-url').text(currentClassroom.alternateLink).attr("href", currentClassroom.alternateLink);
+        $('#classroom-name').text(currentClassroom.name).attr("href", currentClassroom.alternateLink);
 
         google.script.run
             .withSuccessHandler(listCourseWorkHandler)
@@ -46,8 +45,9 @@
         courseWorksElememt.html('');
         response.filter(courseWorkGroupedByTopic => courseWorkGroupedByTopic.courseWorks.length > 0)
             .forEach(courseWorkGroupedByTopic => {
-
-                const ul = $(document.createElement('ul')).prop({ class: 'classworks-under-topic list-group list-group-flush' });
+                const topicId = courseWorkGroupedByTopic.topic.topicId;
+                const ulId = 'list-' + topicId;
+                const ul = $(document.createElement('ul')).prop({ class: 'classworks-under-topic list-group list-group-flush', id: ulId });
                 courseWorkGroupedByTopic.courseWorks.forEach(courseWork => {
                     const li = $(document.createElement('li')).prop({ class: 'classworks list-group-item d-flex justify-content-between align-items-center' });
                     const courseWorkTitle = $(document.createElement('span')).prop({ class: 'classwork-title' });
@@ -57,12 +57,17 @@
                     li.append(courseWorkTitle).append(courseWorkState);
                     ul.append(li);
                 })
+                const collapseBtn = $(document.createElement('button')).attr({
+                    'data-bs-toggle': 'collapse',
+                    'data-bs-target': '#' + ulId + '-div',
+                }).prop({class: 'btn btn-outline-secondary collapseBtn'}).text('+');
+                collapseBtn.on('click', function () { const btnText = $(this).text(); $(this).text(btnText === '+' ? '-' : '+') });
 
-                const topicDiv = $(document.createElement('div')).prop({ class: 'topic-div d-flex justify-content-between'})
+                const topicDiv = $(document.createElement('div')).prop({ class: 'topic-div d-flex justify-content-between' })
                 const topicName = $(document.createElement('span')).prop({ class: 'topic-name' });
                 topicName.text(courseWorkGroupedByTopic.topic.name);
-                topicDiv.append(topicName);
-                const topicId = courseWorkGroupedByTopic.topic.topicId;
+                const courseWorkCount = $(document.createElement('span')).prop( {class: 'ms-2' }).text( courseWorkGroupedByTopic.courseWorks.length + ' 个材料');
+                topicDiv.append($(document.createElement('div')).append(collapseBtn).append(topicName).append(courseWorkCount));
                 if (topicId !== null) {
                     const importButton = $(document.createElement('input')).prop({
                         type: 'button',
@@ -73,9 +78,10 @@
                     topicDiv.append(importButton);
                 }
 
-                const topic = $(document.createElement('div')).prop({ class: 'topic' });  
-                topic.append(topicDiv).append(ul);
-
+                const topic = $(document.createElement('div')).prop({ class: 'topic' });
+                const ulDiv = $(document.createElement('div')).prop({ id: ulId + '-div', class: 'collapse' });
+                ulDiv.append(ul);
+                topic.append(topicDiv).append(ulDiv);
                 courseWorksElememt.append(topic);
             })
     }
