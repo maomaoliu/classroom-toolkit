@@ -23,10 +23,18 @@
 
     function importPointsByTopic(event) {
         console.log(event.data.topicId);
+
+        google.script.run
+            .withSuccessHandler(importPointsByTopicHandler)
+            .importPointsByTopic(currentClassroom.id, event.data.topicId) ; 
     }
 
     function goBackToMainPage() {
         updateStatus({ listingDiv: true, creatingDiv: false, operatingDiv: false });
+    }
+
+    function importPointsByTopicHandler(response) {
+        console.log('导入成功');
     }
 
     function createCourseWorksHandler(response) {
