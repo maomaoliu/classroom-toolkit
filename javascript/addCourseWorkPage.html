@@ -73,8 +73,12 @@
     function listCourseWorkHandler(response) {
         let courseWorksElememt = $('#released-classworks');
         courseWorksElememt.html('');
-        response.filter(courseWorkGroupedByTopic => courseWorkGroupedByTopic.courseWorks.length > 0)
-            .forEach(courseWorkGroupedByTopic => {
+        const groups = response.filter(courseWorkGroupedByTopic => courseWorkGroupedByTopic.courseWorks.length > 0);
+        if (groups.length == 0) {
+            courseWorksElememt.append(buildPromptMsgDiv('没有已发布的课程材料'));
+            return;
+        }
+        groups.forEach(courseWorkGroupedByTopic => {
                 const topicId = courseWorkGroupedByTopic.topic.topicId;
                 const ulId = 'list-' + topicId;
                 const ul = $(document.createElement('ul')).prop({ class: 'classworks-under-topic list-group list-group-flush', id: ulId });
@@ -87,12 +91,9 @@
                     li.append(courseWorkTitle).append(courseWorkState);
                     ul.append(li);
                 })
-                const collapseBtn = $(document.createElement('button')).attr({
-                    'data-bs-toggle': 'collapse',
-                    'data-bs-target': '#' + ulId + '-div',
-                }).prop({ class: 'btn btn-outline-secondary collapseBtn' }).text('+');
-                collapseBtn.on('click', function () { const btnText = $(this).text(); $(this).text(btnText === '+' ? '-' : '+') });
 
+                const targetId = ulId + '-div';
+                const collapseBtn = buildCollapseButton(targetId);
                 const topicDiv = $(document.createElement('div')).prop({ class: 'topic-div d-flex justify-content-between' })
                 const topicName = $(document.createElement('span')).prop({ class: 'topic-name' });
                 topicName.text(courseWorkGroupedByTopic.topic.name);
@@ -111,7 +112,7 @@
                 const topic = $(document.createElement('div')).prop({ class: 'topic' });
                 const ulDiv = $(document.createElement('div')).prop({ id: ulId + '-div', class: 'collapse' });
                 ulDiv.append(ul);
-                const importingDiv = $(document.createElement('div')).prop({ id: 'importing-' + topicId});
+                const importingDiv = $(document.createElement('div')).prop({ id: 'importing-' + topicId });
                 topic.append(topicDiv).append(importingDiv).append(ulDiv);
                 courseWorksElememt.append(topic);
             })
@@ -120,6 +121,10 @@
     function listTopicsNotReleasedHandler(response) {
         let topicsToAddElement = $('#to-release-topics');
         topicsToAddElement.html('');
+        if (response.length === 0) {
+            topicsToAddElement.append(buildPromptMsgDiv('没有未发布的主题'));
+            return;
+        }
         response.forEach((topic, index) => {
             const input = $(document.createElement('input')).prop({
                 type: 'radio',

@@ -14,8 +14,8 @@
     function buildLoadingElement(loadingMsg) {
         const ele = $(document.createElement('div')).prop({ class: 'd-flex justify-content-center py-2' });
         ele
-            .append($(document.createElement('div')).prop({ class: 'spinner-border' }).attr({ role: 'status'}))
-            .append($(document.createElement('span')).prop({ class: 'text-secondary ms-5' }).text( loadingMsg || '请稍后...' ));
+            .append($(document.createElement('div')).prop({ class: 'spinner-border' }).attr({ role: 'status' }))
+            .append($(document.createElement('span')).prop({ class: 'text-secondary ms-5' }).text(loadingMsg || '请稍后...'));
         return ele;
     }
 
@@ -23,5 +23,17 @@
         const ele = $(document.createElement('div')).prop({ class: 'text-danger  py-2' });
         ele.append($(document.createElement('span')).text(errorMsg));
         return ele;
+    }
+
+    function buildCollapseButton(targetId) {
+        return $(document.createElement('button')).attr({
+            'data-bs-toggle': 'collapse',
+            'data-bs-target': '#' + targetId,
+        }).prop({ class: 'btn btn-outline-secondary collapseBtn' }).text('+');
+        collapseBtn.on('click', function () { const btnText = $(this).text(); $(this).text(btnText === '+' ? '-' : '+') });
+    }
+
+    function buildPromptMsgDiv(msg) {
+        return $(document.createElement('div')).prop({ class: 'text-center fs-5 text-secondary py-2' }).text(msg);
     }
 </script>
