@@ -36,4 +36,12 @@
     function buildPromptMsgDiv(msg) {
         return $(document.createElement('div')).prop({ class: 'text-center fs-5 text-secondary py-2' }).text(msg);
     }
+
+    function addTooltip(jqueryBtn, tooltipMsg) {
+        jqueryBtn.attr({ 
+            'data-bs-toggle': 'tooltip',
+            'data-bs-placement': 'top',
+            title: tooltipMsg
+        })
+    }
 </script>

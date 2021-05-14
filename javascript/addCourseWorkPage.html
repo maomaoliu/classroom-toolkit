@@ -106,6 +106,7 @@
                         id: 'import-button-' + topicId,
                     });
                     importButton.on('click', null, { topicId: topicId }, importPointsByTopic);
+                    addTooltip(importButton, '只能导入用该工具创建的课程材料');
                     topicDiv.append(importButton);
                 }
 
