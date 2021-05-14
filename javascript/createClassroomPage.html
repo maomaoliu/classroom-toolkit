@@ -10,9 +10,13 @@
         const marketName = $('#uname').val();
         const classroomNo = $('#classroomNo').val();
         const sectionName = createSectionName(marketName, classroomNo);
+
+        const containerId = 'classroom-creating';
+        addLoading(containerId, '创建需要大约半分钟时间');
         google.script.run
             .withSuccessHandler(createClassroomSuccessHandler)
-            .withUserObject(element)
+            .withFailureHandler(onFailure)
+            .withUserObject(containerId)
             .createClassroom(createClassroomName(sectionName), sectionName);
     }
 

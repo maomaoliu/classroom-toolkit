@@ -1,0 +1,27 @@
+<script>
+    function addLoading(containerId, msg) {
+        let element = $('#' + containerId);
+        element.html('');
+        element.append(buildLoadingElement(msg));
+    }
+
+    function addError(errorMsg, containerId) {
+        let element = $('#' + containerId);
+        element.html('');
+        element.append(buildErrorMessage(errorMsg));
+    }
+
+    function buildLoadingElement(loadingMsg) {
+        const ele = $(document.createElement('div')).prop({ class: 'd-flex justify-content-center py-2' });
+        ele
+            .append($(document.createElement('div')).prop({ class: 'spinner-border' }).attr({ role: 'status'}))
+            .append($(document.createElement('span')).prop({ class: 'text-secondary ms-5' }).text( loadingMsg || '请稍后...' ));
+        return ele;
+    }
+
+    function buildErrorMessage(errorMsg) {
+        const ele = $(document.createElement('div')).prop({ class: 'text-danger  py-2' });
+        ele.append($(document.createElement('span')).text(errorMsg));
+        return ele;
+    }
+</script>

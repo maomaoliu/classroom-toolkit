@@ -37,6 +37,10 @@
     updateStatus(documentStatus);
   }
 
+  function onFailure(error, containerId) {
+    addError(error.message, containerId);
+  }
+
   initPage();
 
 </script>

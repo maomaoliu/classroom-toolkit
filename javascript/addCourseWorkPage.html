@@ -1,13 +1,22 @@
 <script>
     function initCourseWorkPage() {
         $('#classroom-name').text(currentClassroom.name).attr("href", currentClassroom.alternateLink);
+        $('#course-works-releasing').html('');
         loadDueDate();
 
+        const releasedContainerId = 'released-classworks';
+        addLoading(releasedContainerId);
         google.script.run
             .withSuccessHandler(listCourseWorkHandler)
+            .withFailureHandler(onFailure)
+            .withUserObject(releasedContainerId)
             .listCourseWork(currentClassroom.id);
+        const toReleaseContainerId = 'to-release-topics';
+        addLoading(toReleaseContainerId);
         google.script.run
             .withSuccessHandler(listTopicsNotReleasedHandler)
+            .withFailureHandler(onFailure)
+            .withUserObject(toReleaseContainerId)
             .listTopicsNotReleased(currentClassroom.id);
 
     }
@@ -16,16 +25,23 @@
         let topicName = $('input[name=topic]:checked').val();
         let practiceDueTime = $('#practice-due-time').val();
         let assignmentDueTime = $('#assignment-due-time').val();
+
+        const containerId = 'course-works-releasing';
+        addLoading(containerId, '发布中，大约需要2~5分钟');
         google.script.run
             .withSuccessHandler(createCourseWorksHandler)
+            .withFailureHandler(onFailure)
+            .withUserObject(containerId)
             .createCourseWorks(currentClassroom.id, topicName, practiceDueTime, assignmentDueTime);
     }
 
     function importPointsByTopic(event) {
-        console.log(event.data.topicId);
-
+        const containerId = 'importing-' + event.data.topicId;
+        addLoading(containerId, '导入大约需要2~5分钟');
         google.script.run
             .withSuccessHandler(importPointsByTopicHandler)
+            .withFailureHandler(onFailure)
+            .withUserObject(containerId)
             .importPointsByTopic(currentClassroom.id, event.data.topicId);
     }
 
@@ -95,7 +111,8 @@
                 const topic = $(document.createElement('div')).prop({ class: 'topic' });
                 const ulDiv = $(document.createElement('div')).prop({ id: ulId + '-div', class: 'collapse' });
                 ulDiv.append(ul);
-                topic.append(topicDiv).append(ulDiv);
+                const importingDiv = $(document.createElement('div')).prop({ id: 'importing-' + topicId});
+                topic.append(topicDiv).append(importingDiv).append(ulDiv);
                 courseWorksElememt.append(topic);
             })
     }

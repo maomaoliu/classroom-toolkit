@@ -3,9 +3,13 @@
 
     function listClassrooms(element) {
         const keyWord = $('#classroom-key-word').val();
+        
+        const containerId = 'classroom-list';
+        addLoading(containerId);
         google.script.run
             .withSuccessHandler(listClassroomsSuccessHandler)
-            .withUserObject(element)
+            .withFailureHandler(onFailure)
+            .withUserObject(containerId)
             .listClassrooms(keyWord, 100);
     }
 
