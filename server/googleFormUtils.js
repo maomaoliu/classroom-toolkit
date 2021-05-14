@@ -40,7 +40,7 @@ function getQuizScore_(form) {
         }
         emailAndScores.push({ email: formResponse.getRespondentEmail(), score: score });
     }
-    return emailAndScores;
+    return emailAndScores.reverse();
 }
 
 function getStudentsInfo_(students) {
