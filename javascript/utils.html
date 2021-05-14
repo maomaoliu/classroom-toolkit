@@ -26,11 +26,12 @@
     }
 
     function buildCollapseButton(targetId) {
-        return $(document.createElement('button')).attr({
+        let collapseBtn = $(document.createElement('button')).attr({
             'data-bs-toggle': 'collapse',
             'data-bs-target': '#' + targetId,
         }).prop({ class: 'btn btn-outline-secondary collapseBtn' }).text('+');
         collapseBtn.on('click', function () { const btnText = $(this).text(); $(this).text(btnText === '+' ? '-' : '+') });
+        return collapseBtn;
     }
 
     function buildPromptMsgDiv(msg) {
