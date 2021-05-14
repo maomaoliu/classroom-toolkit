@@ -11,9 +11,9 @@ function getMaxPoints(formId) {
     return point;
 }
 
-function importFormScoreToClassroom(courseId, courseWorkId, form) {
+function importFormScoreToClassroom(courseId, courseWorkId, form, students) {
     var emailAndScores = getQuizScore_(form);
-    var studentIdAndEmails = getStudentsInfo_(courseId);
+    var studentIdAndEmails = getStudentsInfo_(students);
     var submissions = getSubmissions_(courseId, courseWorkId);
 
     for (var i = 0; i < submissions.length; i++) {
@@ -43,24 +43,12 @@ function getQuizScore_(form) {
     return emailAndScores;
 }
 
-function getStudentsInfo_(courseId) {
-    var students = loadStudents_(courseId);
+function getStudentsInfo_(students) {
     var studentIdAndEmails = [];
     for (var i = 0; i < students.length; i++) {
         studentIdAndEmails.push({ id: students[i].userId, email: students[i].profile.emailAddress });
     }
     return studentIdAndEmails;
-}
-
-function loadStudents_(courseId) {
-    let students = [];
-    let token = undefined;
-    do {
-        const object = Classroom.Courses.Students.list(courseId, { pageToken: token });
-        token = object.nextPageToken;
-        students = students.concat(object.students);    
-    } while (token !== undefined);
-    return students;
 }
 
 function getSubmissions_(courseId, courseWorkId) {

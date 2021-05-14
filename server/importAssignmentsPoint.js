@@ -5,13 +5,15 @@ function importPointsByTopic(courseId, topicId) {
 }
 
 function importPointsByCourseWorks(courseId, courseWorks) {
+    const students = loadStudents_(courseId);
+    if (students.length === 0) return;
     const formFiles = getFormsUnderTeacherFolder(courseId);
     courseWorks
         .filter(courseWork => courseWork.materials.length === 1 && courseWork.materials[0].form !== undefined)
         .forEach((courseWork) => {
             const publishedUrl = courseWork.materials[0].form.formUrl;
             const formFile = formFiles.find(file => file.getPublishedUrl() === publishedUrl);
-            if (formFile !== undefined) importFormScoreToClassroom(courseId, courseWork.id, formFile);
+            if (formFile !== undefined) importFormScoreToClassroom(courseId, courseWork.id, formFile, students);
         });
 }
 
@@ -44,4 +46,15 @@ function testImportPointsByTopic() {
     const courseWorkId = '337331498440';
     const courseWork = Classroom.Courses.CourseWork.get(courseId, courseWorkId);
     Logger.log(importPointsByCourseWorks(courseId, [courseWork]));
+}
+
+function loadStudents_(courseId) {
+    let students = [];
+    let token = undefined;
+    do {
+        const object = Classroom.Courses.Students.list(courseId, { pageToken: token });
+        token = object.nextPageToken;
+        students = object.students !== undefined ? students.concat(object.students) : students;    
+    } while (token !== undefined);
+    return students;
 }

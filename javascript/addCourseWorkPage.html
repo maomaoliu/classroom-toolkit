@@ -62,8 +62,10 @@
         return theDay.toJSON().replace('/', '-').substr(0, 10) + 'T23:59';
     }
 
-    function importPointsByTopicHandler(response) {
-        console.log('导入成功');
+    function importPointsByTopicHandler(response, containerId) {
+        const elem = $('#' + containerId);
+        elem.html('');
+        elem.append($(document.createElement('div')).prop({class: 'text-end text-secondary py-2'}).text('导入完毕'));
     }
 
     function createCourseWorksHandler(response) {
