@@ -1,6 +1,7 @@
 <script>
     function initCourseWorkPage() {
         $('#classroom-name').text(currentClassroom.name).attr("href", currentClassroom.alternateLink);
+        loadDueDate();
 
         google.script.run
             .withSuccessHandler(listCourseWorkHandler)
@@ -32,6 +33,19 @@
         updateStatus({ listingDiv: true, creatingDiv: false, operatingDiv: false });
     }
 
+    function loadDueDate() {
+        $('#practice-due-time').val(getDaysLater(2));
+        $('#assignment-due-time').val(getDaysLater(4));
+    }
+
+    function getDaysLater(day) {
+        const today = new Date();
+        let theDay = new Date(today.setDate(today.getDate() + day));
+        theDay.setHours(23);
+        theDay.setMinutes(59);
+        return theDay.toJSON().replace('/', '-').substr(0, 10) + 'T23:59';
+    }
+
     function importPointsByTopicHandler(response) {
         console.log('导入成功');
     }
@@ -60,13 +74,13 @@
                 const collapseBtn = $(document.createElement('button')).attr({
                     'data-bs-toggle': 'collapse',
                     'data-bs-target': '#' + ulId + '-div',
-                }).prop({class: 'btn btn-outline-secondary collapseBtn'}).text('+');
+                }).prop({ class: 'btn btn-outline-secondary collapseBtn' }).text('+');
                 collapseBtn.on('click', function () { const btnText = $(this).text(); $(this).text(btnText === '+' ? '-' : '+') });
 
                 const topicDiv = $(document.createElement('div')).prop({ class: 'topic-div d-flex justify-content-between' })
                 const topicName = $(document.createElement('span')).prop({ class: 'topic-name' });
                 topicName.text(courseWorkGroupedByTopic.topic.name);
-                const courseWorkCount = $(document.createElement('span')).prop( {class: 'ms-2' }).text( courseWorkGroupedByTopic.courseWorks.length + ' 个材料');
+                const courseWorkCount = $(document.createElement('span')).prop({ class: 'ms-2' }).text(courseWorkGroupedByTopic.courseWorks.length + ' 个材料');
                 topicDiv.append($(document.createElement('div')).append(collapseBtn).append(topicName).append(courseWorkCount));
                 if (topicId !== null) {
                     const importButton = $(document.createElement('input')).prop({
