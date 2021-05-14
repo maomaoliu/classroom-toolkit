@@ -1,34 +1,49 @@
-<div id="operatingDiv">
-	<div><label>班级：</label> <span id="classroom-name">/span></div>
-	<div><label>URL：</label> <span id="classroom-url"></span></div>
-	<hr>
-
-	<h2>已发布的课程材料</h2>
-	<ul id="released-classworks" class="classworks">
-		<li class="classworks">
-			<div class="topic">
-				<span class="topic-name">.</span>
-				<input type="button" value="导入客观题分数">
-				<ul class="classworks-under-topic">
-					<li class="classworks-under-topic">.</li>
-				</ul>
-			</div>
-		</li>
-	</ul>
-
-	<h2>请选择要发布的章节和并填写提交时间</h2>
-	<ul id="to-release-topics">
-		<li class="topic">
-			<input type="radio" id="capture3" name="topic" value="capture3">
-			<label for="capture3" class="topic-name">.</label> <span class="topic-detail">共6个课程材料</span>
-		</li>
-	</ul>
-	<label for="practice-due-time">期望的自测题提交时间</label>	<input type="datetime-local" id="practice-due-time" name="practice-due-time" value="2021-06-12T19:30">
-	<label for="assignment-due-time">期望的大作业提交时间</label>	<input type="datetime-local" id="assignment-due-time" name="assignment-due-time" value="2021-06-12T19:30">
-
-	<div>
-		<input type="button" value="发布" onclick="releaseTopicMaterials()"/>
+<div id="operatingDiv" class="container">
+	<div class="row">
+		<p class="col title">班级操作</p>
 	</div>
+	<div class="text-center">
+		<p><label>班级：</label> <span id="classroom-name"></span></p>
+		<p><label>URL：</label> <a href="" id="classroom-url"></a></p>
+	</div>
+	<div class="row">
+		<div class="col">
+			<h3 class="text-center">已发布的课程材料</h3>
+			<ul id="released-classworks" class="classworks">
+				<li class="classworks">
+					<div class="topic">
+						<span class="topic-name">.</span>
+						<input type="button" value="导入客观题分数">
+						<ul class="classworks-under-topic">
+							<li class="classworks-under-topic">.</li>
+						</ul>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div class="col">
+			<h3 class="text-center">发布新的课程材料</h3>
+			<div id="to-release-div">
+				<p class="to-release-header">请选择要发布的主题：</p>
+				<ul id="to-release-topics" class="list-group list-group-flush form-check">
+					<li class="topic list-group-item">
+						<input type="radio" id="capture3" name="topic" value="capture3">
+						<label for="capture3" class="topic-name">.</label> <span class="topic-detail">共6个课程材料</span>
+					</li>
+				</ul>
+				<div class="my-3">
+					<label for="practice-due-time">期望的自测题提交时间</label> <input type="datetime-local" id="practice-due-time"
+					name="practice-due-time" value="2021-06-12T19:30">
+				</div>
+				<div class="my-3">
+					<label for="assignment-due-time">期望的大作业提交时间</label> <input type="datetime-local"
+					id="assignment-due-time" name="assignment-due-time" value="2021-06-12T19:30">
+				</div>
 
-	<input type="button" value="回到班级列表" onclick="goBackToMainPage()" />
+				<div class="text-center">
+					<input type="button" value="发布" onclick="releaseTopicMaterials()" />
+				</div>
+			</div>
+		</div>
+	</div>
 </div>

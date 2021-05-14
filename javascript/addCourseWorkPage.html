@@ -1,7 +1,7 @@
 <script>
     function initCourseWorkPage() {
         $('#classroom-name').text(currentClassroom.name);
-        $('#classroom-url').text(currentClassroom.alternateLink);
+        $('#classroom-url').text(currentClassroom.alternateLink).attr("href", currentClassroom.alternateLink);
 
         google.script.run
             .withSuccessHandler(listCourseWorkHandler)
@@ -18,7 +18,7 @@
         let assignmentDueTime = $('#assignment-due-time').val();
         google.script.run
             .withSuccessHandler(createCourseWorksHandler)
-            .createCourseWorks(currentClassroom.id, topicName, practiceDueTime, assignmentDueTime) ;        
+            .createCourseWorks(currentClassroom.id, topicName, practiceDueTime, assignmentDueTime);
     }
 
     function importPointsByTopic(event) {
@@ -26,7 +26,7 @@
 
         google.script.run
             .withSuccessHandler(importPointsByTopicHandler)
-            .importPointsByTopic(currentClassroom.id, event.data.topicId) ; 
+            .importPointsByTopic(currentClassroom.id, event.data.topicId);
     }
 
     function goBackToMainPage() {
@@ -46,35 +46,35 @@
         courseWorksElememt.html('');
         response.filter(courseWorkGroupedByTopic => courseWorkGroupedByTopic.courseWorks.length > 0)
             .forEach(courseWorkGroupedByTopic => {
-                const topicName = $(document.createElement('span')).prop({ class: 'topic-name' });
-                topicName.text(courseWorkGroupedByTopic.topic.name);
-                
-                const ul = $(document.createElement('ul')).prop({ class: 'classworks-under-topic' });
+
+                const ul = $(document.createElement('ul')).prop({ class: 'classworks-under-topic list-group list-group-flush' });
                 courseWorkGroupedByTopic.courseWorks.forEach(courseWork => {
-                    const li = $(document.createElement('li')).prop({ class: 'classworks' });
-                    const courseWorkTitle = $(document.createElement('span')).prop({ class: 'title' });
-                    const courseWorkState = $(document.createElement('span')).prop({ class: 'state' });
+                    const li = $(document.createElement('li')).prop({ class: 'classworks list-group-item d-flex justify-content-between align-items-center' });
+                    const courseWorkTitle = $(document.createElement('span')).prop({ class: 'classwork-title' });
+                    const courseWorkState = $(document.createElement('span')).prop({ class: 'classwork-state badge bg-secondary rounded-pill' });
                     courseWorkTitle.text(courseWork.title);
                     courseWorkState.text(courseWork.state);
                     li.append(courseWorkTitle).append(courseWorkState);
                     ul.append(li);
                 })
 
-                const topic = $(document.createElement('div')).prop({ class: 'topic' });
-                topic.append(topicName);
-
+                const topicDiv = $(document.createElement('div')).prop({ class: 'topic-div d-flex justify-content-between'})
+                const topicName = $(document.createElement('span')).prop({ class: 'topic-name' });
+                topicName.text(courseWorkGroupedByTopic.topic.name);
+                topicDiv.append(topicName);
                 const topicId = courseWorkGroupedByTopic.topic.topicId;
                 if (topicId !== null) {
-                  const importButton = $(document.createElement('input')).prop({ 
-                    type: 'button',
-                    value: '导入自测题分数',
-                    id: 'import-button-' + topicId,
-                });
-                importButton.on('click', null, {topicId: topicId}, importPointsByTopic);
-                                topic.append(importButton);
-
+                    const importButton = $(document.createElement('input')).prop({
+                        type: 'button',
+                        value: '导入自测题分数',
+                        id: 'import-button-' + topicId,
+                    });
+                    importButton.on('click', null, { topicId: topicId }, importPointsByTopic);
+                    topicDiv.append(importButton);
                 }
-                                topic.append(ul);
+
+                const topic = $(document.createElement('div')).prop({ class: 'topic' });  
+                topic.append(topicDiv).append(ul);
 
                 courseWorksElememt.append(topic);
             })
@@ -89,13 +89,14 @@
                 name: 'topic',
                 value: topic.name,
                 id: index,
+                class: 'form-check-input',
             });
             const topicLabel = $(document.createElement('label')).prop({
                 for: index,
-                class: 'topic-name'
+                class: 'to-release-topic-name form-check-label'
             }).text(topic.name);
-            const topicDetailSpan = $(document.createElement('span')).prop({ class: 'topic-detail'}).text('共 ' + topic.materialCount + ' 个课程材料' );
-            const li = $(document.createElement('li')).prop({ class: 'topic' });
+            const topicDetailSpan = $(document.createElement('span')).prop({ class: 'topic-detail ms-2' }).text('共 ' + topic.materialCount + ' 个课程材料');
+            const li = $(document.createElement('li')).prop({ class: 'topic list-group-item' });
             li.append(input).append(topicLabel).append(topicDetailSpan);
             topicsToAddElement.append(li);
         });

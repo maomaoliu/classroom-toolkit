@@ -1,9 +1,9 @@
 <div id="listingDiv" class="container">
 	<div class="row">
-		<p class="col fs-2">选择要操作的班级或创建新班级</p>
+		<p class="col title">选择要操作的班级或创建新班级</p>
 	</div>
 
-	<div class="row">
+	<div class="row text-center">
 		<div class="col">
 			<input type="text" id="classroom-key-word" />
 			<input type="button" value="列出班级" onclick="listClassrooms(this)" />
@@ -12,11 +12,11 @@
 		</div>
 	</div>
 
-	<div id="classroom-list"></div>
+	<div id="classroom-list" class="form-check"></div>
 
-	<div id="choose-classroom-button" class="hide row">
+	<div id="choose-classroom-button" class="hide row text-center">
 		<div class="col">
-			<input type="button" value="选好了" onclick="gotoCourseWorkPage(this)" />
+			<input type="button" value="进入班级" onclick="gotoCourseWorkPage(this)" />
 		</div>
 	</div>
 </div>
