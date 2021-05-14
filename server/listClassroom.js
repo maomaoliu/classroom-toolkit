@@ -1,6 +1,7 @@
 // 列出包含 keyWord 的 classroom
 function listClassrooms(keyWord, pageSize) {
   const optionalArgs = {
+    teacherId: 'me',
     pageSize: pageSize
   };
   const response = Classroom.Courses.list(optionalArgs);
