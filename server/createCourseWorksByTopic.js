@@ -35,7 +35,7 @@ function createMaterial_(material, topicId, courseId) {
     let courseWorkToCreate = {
         title: material.title,
         description: buildDescription_(material.content),
-        materials: buildAttachements_(material.content),
+        materials: buildLinkOnlyAttachements_(material.content),
         state: 'PUBLISHED',
         topicId: topicId
     };
@@ -89,13 +89,26 @@ function buildDescription_(content) {
     return description === undefined ? '' : description.info;
 }
 
+function buildLinkOnlyAttachements_(content) {
+    const attachmentContents = content.filter(each => each.type !== 'description');
+    var copiedAttachments = [];
+    attachmentContents.forEach(attachment => {
+        copiedAttachments.push(buildLinkAttachment_(attachment.info));
+    });
+    return copiedAttachments;
+}
+
 function buildAttachements_(content, topicFolder) {
     const attachmentContents = content.filter(each => each.type !== 'description');
     var copiedAttachments = [];
     attachmentContents.forEach(attachment => {
-        const file = DriveApp.getFileById(getFileIdFromUrl(attachment.info));
-        const fileCopied = file.makeCopy(file.getName(), topicFolder);
-        copiedAttachments.push(buildAttachment_(fileCopied, attachment.type));
+        try {
+            const file = DriveApp.getFileById(getFileIdFromUrl(attachment.info));
+            const fileCopied = file.makeCopy(file.getName(), topicFolder);
+            copiedAttachments.push(buildAttachment_(fileCopied, attachment.type));
+        } catch (error) {
+            copiedAttachments.push(buildLinkAttachment_(attachment.info));
+        }
     });
     return copiedAttachments;
 }
